@@ -1,0 +1,194 @@
+html, body, p, h1, div, ul, li {
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei", sans-serif !important;
+}
+
+.form-control {
+    height: 40px;
+}
+
+.section1 {
+    background-size: cover;
+    background-image: url("../images/bg1.jpg");
+}
+
+.section2 {
+    background-image: url("../images/bg2.jpg");
+    background-size: cover;
+}
+
+.section-title, .section-form {
+    color: #fff;
+    padding-top: 10%;
+}
+
+#login .input-group,#register .input-group {
+    width: 80%;
+    margin: 0 auto 20px;
+}
+
+.section-title-login { position: relative; left: -120%;}
+.section-form-login { position: relative; right: -120%;}
+.section-title-reg { position: relative; right: -120%;}
+.section-form-reg { position: relative; left: -120%;}
+
+/* Moema */
+
+/* Common button styles */
+.button {
+    outline: none !important;
+    float: left;
+    display: block;
+    color: inherit;
+    vertical-align: middle;
+    position: relative;
+    z-index: 1;
+    -webkit-backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.button--moema {
+    border-radius: 4px;
+    background: #3C8DBC;
+    color: #fff;
+    -webkit-transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button--moema.button--inverted {
+    background: #ECEFF1;
+    color: #37474f;
+}
+
+.button--moema::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    bottom: -20px;
+    right: -20px;
+    background: inherit;
+    border-radius: 5px;
+    z-index: -1;
+    opacity: 0.4;
+    -webkit-transform: scale3d(0.8, 0.5, 1);
+    transform: scale3d(0.8, 0.5, 1);
+}
+
+.button--moema:hover {
+    -webkit-transition: background-color 0.1s 0.3s, color 0.1s 0.3s;
+    transition: background-color 0.1s 0.3s, color 0.1s 0.3s;
+    color: #ECEFF1;
+    background-color: #4C9DCC;
+    -webkit-animation: anim-moema-1 0.3s forwards;
+    animation: anim-moema-1 0.3s forwards;
+}
+
+.button--moema.button--inverted:hover {
+    color: #ECEFF1;
+    background-color: #4C9DCC;
+}
+
+.button--moema:hover::before {
+    -webkit-animation: anim-moema-2 0.3s 0.3s forwards;
+    animation: anim-moema-2 0.3s 0.3s forwards;
+}
+
+@-webkit-keyframes anim-moema-1 {
+    60% {
+        -webkit-transform: scale3d(0.8, 0.8, 1);
+        transform: scale3d(0.8, 0.8, 1);
+    }
+    85% {
+        -webkit-transform: scale3d(1.1, 1.1, 1);
+        transform: scale3d(1.1, 1.1, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@keyframes anim-moema-1 {
+    60% {
+        -webkit-transform: scale3d(0.8, 0.8, 1);
+        transform: scale3d(0.8, 0.8, 1);
+    }
+    85% {
+        -webkit-transform: scale3d(1.1, 1.1, 1);
+        transform: scale3d(1.1, 1.1, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@-webkit-keyframes anim-moema-2 {
+    to {
+        opacity: 0;
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@keyframes anim-moema-2 {
+    to {
+        opacity: 0;
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+#checkCode {
+    box-shadow: none !important;
+    outline: none !important;
+    background-color: #fff !important;
+    width: 30% !important;
+    position: absolute;
+    right: 0;
+    font-size: 15px;
+    color: rgb(75, 110, 180);
+    height: 40px;
+    border: 0;
+    letter-spacing: 5px;
+    border-radius: 4px;
+}
+
+.code {
+    width: 50% !important;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
+
+.login-tip ,.reg-tip{
+    display: none;
+    padding: 10px !important;
+    width: 80%;
+    margin: 0 auto 20px;
+    height: 40px;
+}
+
+@media screen and (max-width: 992px) {
+    .section-title {
+        text-align: center;
+    }
+}

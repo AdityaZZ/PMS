@@ -1,0 +1,274 @@
+<% include header.ejs %>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header class="main-header">
+    <a href="#" class="logo">
+      <span class="logo-mini">PMS</span>
+      <span class="logo-lg">个人待办事项管理系统</span>
+    </a>
+    <nav class="navbar navbar-static-top">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+            </a>
+          </li>
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img  src="/images/user/user.jpg" class="user-image"
+                    alt="User Image">
+              <span class="hidden-xs"><%- user.name %></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="/images/user/user.jpg" class="img-circle"
+               alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p><%- user.name %></p>
+          <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+        </div>
+      </div>
+      <ul class="sidebar-menu">
+        <!--个人信息-->
+        <li class="active treeview">
+          <a href="/updateInfo">
+            <i class="fa  fa-user"></i> <span>个人信息</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="/updateInfo"><i class="fa fa-circle-o"></i> 修改信息</a></li>
+            <li><a href="/changePassword"><i class="fa fa-circle-o"></i> 修改密码</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#logoutModel"><i class="fa fa-circle-o"></i> 退出登录</a></li>
+          </ul>
+        </li>
+
+        <!--事项管理-->
+        <li class="treeview">
+          <a href="/rule">
+            <i class="fa fa-home"></i> <span>事项管理</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </aside>
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        个人信息
+        <small>修改信息</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-user"></i> 个人中心</a></li>
+        <li class="active">修改信息</li>
+      </ol>
+    </section>
+    <section class="content">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">个人信息</h3>
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-7">
+              <form class="form-horizontal" id="mess" name="mess">
+                <!--用户ID-->
+                <div class="form-group" style="display: none;">
+                  <label for="inputID" class="col-sm-2 control-label"><%- user._id %></label>
+                  <div class="col-sm-10">
+                    <input type="text" readonly class="form-control" id="inputID"
+                           style="background: #fff;border: none;" value="<%- user._id %>">
+                  </div>
+                </div>
+                <!--用户名-->
+                <div class="form-group">
+                  <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" readonly id="inputUsername"
+                           style="border:none;background: #fff;"
+                           value="<%- user.name %>">
+                  </div>
+                </div>
+                <!--性别-->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">性别</label>
+                  <div class="col-sm-10" style="margin-top: 6px">
+                    <% if(user.sex=='男'){ %>
+                    <label>
+                      <input type="radio" class="minimal" name="sex" checked  value="男"> 男
+                    </label>
+                    <label style="margin-left: 30px;">
+                      <input type="radio" class="minimal" name="sex" value="女"> 女
+                    </label>
+                    <label style="margin-left: 30px;">
+                      <input type="radio" class="minimal" name="sex" value="保密"> 保密
+                    </label>
+                    <% }%>
+
+                    <% if(user.sex=='女'){ %>
+                    <label>
+                      <input type="radio" class="minimal" name="sex"  value="男"> 男
+                    </label>
+                    <label style="margin-left: 30px;">
+                      <input type="radio" class="minimal" name="sex" checked value="女"> 女
+                    </label>
+                    <label style="margin-left: 30px;">
+                      <input type="radio" class="minimal" name="sex" value="保密"> 保密
+                    </label>
+                    <% }%>
+
+                    <% if(user.sex=='保密'){ %>
+                    <label>
+                      <input type="radio" class="minimal" name="sex"  value="男"> 男
+                    </label>
+                    <label style="margin-left: 30px;">
+                      <input type="radio" class="minimal" name="sex" value="女"> 女
+                    </label>
+                    <label style="margin-left: 30px;">
+                      <input type="radio" class="minimal" name="sex" checked value="保密"> 保密
+                    </label>
+                    <% }%>
+                  </div>
+                </div>
+                <!--年龄-->
+                <div class="form-group">
+                  <label for="inputAge" class="col-sm-2 control-label">年龄</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputAge" value="<%- user.age %>">
+                  </div>
+                </div>
+                <!--电话-->
+                <div class="form-group">
+                  <label for="inputPhone" class="col-sm-2 control-label">电话</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPhone" value="<%- user.phone_number %>">
+                  </div>
+                </div>
+
+                <!--创建时间-->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">创建时间</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputCreation" readonly
+                           style="border:none;background: #fff;" value="<%=moment(user.creation_date).format('YYYY/MM/DD HH:mm:ss')%>">
+                  </div>
+                </div>
+                <!--最近更新-->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">最近更新</label>
+                  <div class="col-sm-10">
+                    <input readonly type="text" class="form-control"
+                           id="inputDepartment"
+                           style="border:none;background: #fff;"  value="<%=moment(user.last_update_date).format('YYYY/MM/DD HH:mm:ss')%>">
+                  </div>
+                </div>
+                <!--备注-->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">备注</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control"
+                           id="inputComments" value="<%- user.comments %>">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-5">
+            </div>
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <button form="mess" type="reset" class="btn btn-default">重置</button>
+          <button form="mess" type="submit" id="updateStaff" class="btn btn-primary btn-save" style="margin-left: 30px;">确认修改
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>by</b> xzx
+    </div>
+    <strong>Copyright &copy; 2016 </strong>
+  </footer>
+</div>
+<!-- 退出 -->
+<div class="modal fade" id="logoutModel" tabindex="-1" role="dialog" aria-labelledby="logoutModelLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="logoutModelLabel">退出提示</h4>
+      </div>
+      <div class="modal-body">
+        是否要退出系统？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <a href="/logout" type="button" class="btn btn-primary">确定</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(function () {
+        //更新基本信息
+        $(".btn-save").on("click",function (e) {
+            e.preventDefault();
+            var _id = $("#inputID").val();
+            var sex = $("input[type=radio]:checked").val();
+            var age  = $("#inputAge").val();
+            var phone_number  = $("#inputPhone").val();
+            var comments  = $("#inputComments").val();
+            if(age>100||age<0){
+                swal("年龄输入非法");
+            }else if(!/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(phone_number)){
+                swal("手机输入非法");
+            }else{
+                var data = {_id:_id,sex:sex,age:age,phone_number:phone_number,comments:comments,last_update_date:new Date()};
+                $.ajax({
+                    type:'POST',
+                    url:'/updateInfo',
+                    data: data,
+                    dataType:'json',
+                    success: function (data, status) {
+                        console.log(data);
+                        if(data.status==0){
+                            swal(data.msg);
+                        } else if(data.status==1){
+                            swal({title: data.msg}, function () {
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1500);
+                            });
+                        }
+                    },
+                    error: function (data, status) {
+                        if (status == "error") {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+span, h1, h2, h3, h4, h5, h6, div, i, a, input {
+  font-family: "Microsoft YaHei", sans-serif;
+}
+
+.img-update {
+  position: relative;
+}
+
+#inputImg {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  top: 50px;
+}
+
+span.fileinput-button {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  width: 120px;
+  top: 50px;
+  height: 120px;
+  color: #fff;
+}
+
+span.fileinput-button:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.img-update .glyphicon-plus {
+  top: 50px;
+}
+
+.user-panel > .info > p {
+  font-weight: 400;
+}
+
+.img-circle {
+  height: 40px !important;
+  width: 40px !important;
+}
+label,span{
+  font-weight: 400 !important;
+}
+
+.user-header small{
+  font-size: 16px;
+  color: rgba(255,255,255,0.8) !important;
+}
+
+/*权限页面*/
+.permission-body{
+  width: 95%;
+  margin: 20px auto;
+}
+.permission-body label{
+  width: 180px;
+  text-align: center;
+  margin: 5px 10px;
+  border-radius: 4px;
+  background-color: #e2e4e6;
+  height: 30px;
+  padding: 5px 0;
+}
+

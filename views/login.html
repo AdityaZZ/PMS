@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>个人待办事项管理系统</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/jquery.fullpage.min.css">
+    <link rel="stylesheet" href="/css/sweetalert.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="icon" href="/images/favicon.ico">
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.fullpage.js"></script>
+    <script src="/js/jquery.easing.min.js"></script>
+    <script src="/js/sweetalert.js"></script>
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="fullPage">
+    <div class="section section1">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-1 section-title section-title-login">
+                <h1>个人待办事项管理系统</h1>
+                <h3 class="hidden-sm hidden-xs">专业的个人待办事项管理系统，个性化方案定制，精细化时间控制。</h3>
+                <h3 class="hidden-sm hidden-xs">详细的事项管理，让事项管理持续优化。</h3>
+            </div>
+            <div class="col-md-4 section-form section-form-login">
+                <div id="login">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                        </span>
+                        <input type="text" class="form-control username" placeholder="请输入用户名">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <i class="fa fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-control password" placeholder="请输入密码">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-transfer"></i>
+                        </span>
+                        <input type="text" class="form-control code" autocomplete="off" maxlength="4" placeholder="请输入验证码">
+                        <input type="button" id="checkCode" class=" btn btn-default" title="刷新验证码">
+                    </div>
+                    <div class="alert alert-danger login-tip" role="alert">...</div>
+                    <div class="input-group">
+                        <button type="button" class="button button--moema btn-login">登 录</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section section2">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1 section-form section-form-reg">
+                <div id="register">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                        </span>
+                        <input type="text" class="form-control add-username" placeholder="请输入用户名">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <i class="fa fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-control add-password" placeholder="请输入密码">
+                    </div>
+                    <div class="input-group">
+                          <span class="input-group-addon">
+                        <i class="fa fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-control add-password2" placeholder="请输入密码">
+                    </div>
+                    <div class="alert alert-danger reg-tip" role="alert">...</div>
+                    <div class="input-group">
+                        <button type="button" class="button button--moema btn-reg">注 册</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 section-title section-title-reg">
+                <h1>个人待办事项管理系统</h1>
+                <h3 class="hidden-sm hidden-xs">专业的个人待办事项管理系统，个性化方案定制，精细化时间控制。</h3>
+                <h3 class="hidden-sm hidden-xs">详细的事项管理，让事项管理持续优化。</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        //初始化全屏滚动
+        $("#fullPage").fullpage({
+            verticalCentered: false,
+            navigation: true,
+            loopTop: true,
+            navigationPosition: "right",
+            navigationTooltips: ['登录', '注册'],
+            showActiveTooltip: true,
+            afterLoad: function(anchorLink, index){
+                if(index == 1){
+                    $('.section1').find('.section-title-login').delay(500).animate({
+                        left: '0'
+                    }, 100, 'easeOutExpo');
+                    $('.section1').find('.section-form-login').delay(500).animate({
+                        right: '0'
+                    }, 1000, 'easeOutExpo');
+                }
+                if(index == 2){
+                    $('.section2').find('.section-title-reg').delay(500).animate({
+                        right: '0'
+                    }, 100, 'easeOutExpo');
+                    $('.section2').find('.section-form-reg').delay(500).animate({
+                        left: '0'
+                    }, 1000, 'easeOutExpo');
+                }
+            },
+            onLeave: function(index, direction){
+                if(index == '1'){
+                    $('.section1').find('.section-title-login').delay(500).animate({
+                        left: '-120%'
+                    }, 100, 'easeOutExpo');
+                    $('.section1').find('.section-form-login').delay(500).animate({
+                        right: '-120%'
+                    }, 1000, 'easeOutExpo');
+                }
+
+                if(index == '2'){
+                    $('.section2').find('.section-title-reg').delay(500).animate({
+                        right: '-120%'
+                    }, 100, 'easeOutExpo');
+                    $('.section2').find('.section-form-reg').delay(500).animate({
+                        left: '-120%'
+                    }, 1000, 'easeOutExpo');
+                }
+            }
+        });
+
+        //更新验证码
+        $("#checkCode").on("click", createCode).trigger('click');
+        //登录
+        login();
+        //注册
+        register();
+        //回车关联登录
+        keyLogin();
+    });
+
+    //验证码生成
+    var yzm = '';
+    function createCode() {
+        yzm = [];
+        var codeLength = 4;
+        var checkCode = document.getElementById("checkCode");
+        checkCode.value = "";
+        var selectChar = [2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        for (var i = 0; i < codeLength; i++) {
+            var charIndex = Math.floor(Math.random() * 32);
+            yzm += selectChar[charIndex];
+        }
+        checkCode.value = yzm;
+    }
+
+    //回车键绑定登录按钮
+    function keyLogin() {
+        $(document).keypress(function (e) {
+            var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+            if (eCode == 13) {
+                $(".btn-login").trigger("click");
+            }
+        });
+    }
+
+    //登录
+    function login() {
+        $(".btn-login").on("click",function (e) {
+            var code = $(".code").val().toUpperCase();
+            var username = $('.username').val(), password = $('.password').val();
+            var data = {"uname": username, "upwd": password};
+            if ($.trim(code) == "") {
+                $(".login-tip").text("验证码输入为空！").show();
+            } else if ($.trim(code) != yzm) {
+                $(".login-tip").text("验证码输入有误！").show();
+            } else {
+                $.ajax({
+                    url: '/login',
+                    type: 'POST',
+                    data: data,
+                    dataType:'json',
+                    success: function (data, status) {
+                        console.log(data);
+                        if(data.status==0){
+                            $(".login-tip").text(data.msg).show();
+                        } else if(data.status==1){
+                            $(".login-tip").text("").hide();
+                            location.href = 'updateInfo';
+                        }
+                    },
+                    error: function (data, status) {
+                        if (status == "error") {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    //注册
+    function register() {
+        $(".btn-reg").on("click",function (e) {
+            e.preventDefault();
+            var username = $('.add-username').val(),
+                password = $('.add-password').val(),
+                passowrd2 = $(".add-password2").val();
+            var data = {"uname": username, "upwd": password};
+            if(!/^[0-9a-zA-Z_]{6,16}$/.test(password)){
+                swal("密码必须为6~16位字母,数字,或_");
+            }else if (password!=passowrd2) {
+                $(".reg-tip").text("两次密码输入不一致！").show();
+            }  else {
+                $.ajax({
+                    url: '/register',
+                    type: 'POST',
+                    data: data,
+                    dataType:'json',
+                    success: function (data, status) {
+                        console.log(data);
+                        if(data.status==0){
+                            $(".reg-tip").text(data.msg).show();
+                        } else if(data.status==1){
+                            $(".reg-tip").text("").hide();
+                            swal({title: data.msg}, function () {
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1500);
+                            });
+                        }
+                    },
+                    error: function (data, status) {
+                        if (status == "error") {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>
+
+

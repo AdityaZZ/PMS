@@ -1,0 +1,444 @@
+<% include header.ejs %>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <a href="#" class="logo">
+            <span class="logo-mini">PMS</span>
+            <span class="logo-lg">个人待办事项管理系统</span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="/images/user/user.jpg" class="user-image"
+                                 alt="User Image">
+                            <span class="hidden-xs"><%- user.name %></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="/images/user/user.jpg" class="img-circle"
+                         alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p><%- user.name %></p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <!--个人信息-->
+                <li class="treeview">
+                    <a href="/updateInfo">
+                        <i class="fa  fa-user"></i> <span>个人信息</span>
+                        <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/updateInfo"><i class="fa fa-circle-o"></i> 修改信息</a></li>
+                        <li class="active"><a href="/changePassword"><i class="fa fa-circle-o"></i> 修改密码</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#logoutModel"><i class="fa fa-circle-o"></i>
+                            退出登录</a></li>
+                    </ul>
+                </li>
+
+                <!--事项管理-->
+                <li class="active treeview">
+                    <a href="/rule">
+                        <i class="fa fa-home"></i> <span>事项管理</span>
+                        <span class="pull-right-container">
+                       </span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                事项管理
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-home"></i> 事项管理</a></li>
+            </ol>
+            <div class="btn-group" style="margin-top: 10px;">
+                <button type="button" class="btn btn-primary btn-add" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus" style="font-size: 12px;"></span> 添加事项
+                </button>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">事项列表</h3>
+                </div>
+                <div class="box-body">
+                    <table id="rule-list" class="table table-bordered table-striped table-responsive">
+                        <thead>
+                        <tr>
+                            <th>标题</th>
+                            <th>内容</th>
+                            <th>创建日期</th>
+                            <th>更新日期</th>
+                            <th>备注</th>
+                            <th>优先级</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%for(var i in todo_items){ if(todo_items[i]._Id)continue%>
+                        <tr>
+                            <td><%=todo_items[i].todo_item_title%></td>
+                            <td><%=todo_items[i].todo_item_content%></td>
+                            <td><%=moment(todo_items[i].creation_date).format('YYYY/MM/DD HH:mm:ss')%></td>
+                            <td><%=moment(todo_items[i].last_update_date).format('YYYY/MM/DD HH:mm:ss')%></td>
+                            <td><%=todo_items[i].comments%></td>
+                            <td class="text-center">
+                                <% if(todo_items[i].priority=='low'){ %>
+                                <label data-id="<%=todo_items[i].priority%>" class="label label-primary">低</label>
+                                <% }%>
+                                <% if(todo_items[i].priority=='medium'){ %>
+                                <label data-id="<%=todo_items[i].priority%>"  class="label label-warning">中</label>
+                                <% }%>
+                                <% if(todo_items[i].priority=='high'){ %>
+                                <label data-id="<%=todo_items[i].priority%>"  class="label label-danger">高</label>
+                                <% }%>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button data-id="<%=todo_items[i]._id%>" class="btn btn-sm btn-danger btn-delete">
+                                        删除
+                                    </button>
+                                    <button data-id="<%=todo_items[i]._id%>" class="btn btn-sm btn-primary btn-edit">
+                                        编辑
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <%}%>
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>by</b> xzx
+        </div>
+        <strong>Copyright &copy; 2016 </strong>
+    </footer>
+</div>
+<!-- 添加事项 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加事项</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                    <span class="input-group-addon">
+                        标题
+                    </span>
+                            <input type="text" class="form-control rule-title" placeholder="请输入标题">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group">
+                        <span class="input-group-addon">
+                            优先级
+                        </span>
+                            <select class="rule-priority form-control">
+                                <option value="low">低</option>
+                                <option value="medium">中</option>
+                                <option value="high">高</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="input-group">
+                    <span class="input-group-addon">
+                      内容
+                    </span>
+                            <input type="text" class="form-control rule-content" placeholder="请输入内容">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group">
+                    <span class="input-group-addon">
+                      备注
+                    </span>
+                            <textarea class="form-control rule-comments" placeholder="请输入备注"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary rule-add">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 更新事项 -->
+<div class="modal fade" id="updateRule" tabindex="-1" role="dialog" aria-labelledby="updateRuleLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="updateRuleLabel">编辑事项</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                    <span class="input-group-addon">
+                        标题
+                    </span>
+                            <input type="text" class="form-control rule-title-update" placeholder="请输入标题">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                        <span class="input-group-addon">
+                            优先级
+                        </span>
+                            <select class="rule-priority-update form-control">
+                                <option value="low">低</option>
+                                <option value="medium">中</option>
+                                <option value="high">高</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group">
+                    <span class="input-group-addon">
+                      内容
+                    </span>
+                            <input type="text" class="form-control rule-content-update" placeholder="请输入内容">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group">
+                    <span class="input-group-addon">
+                      备注
+                    </span>
+                            <textarea class="form-control rule-comments-update" placeholder="请输入备注"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary update-btn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 退出 -->
+<div class="modal fade" id="logoutModel" tabindex="-1" role="dialog" aria-labelledby="logoutModelLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="logoutModelLabel">退出提示</h4>
+            </div>
+            <div class="modal-body">
+                是否要退出系统？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a href="/logout" type="button" class="btn btn-primary">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //进度条
+        $(document).ajaxStart(function () {
+            Pace.restart();
+        });
+
+        //构建表格功能
+        $('#rule-list').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "language": {
+                "search": "搜索:",
+                "sZeroRecords": "没有匹配的条目",
+                "info": "显示 _START_ 到 _END_ / _TOTAL_ 条目",
+                "sLengthMenu": "显示 _MENU_ 条目",
+                "sInfoFiltered": "(总条目：_MAX_ 条)",
+                "zeroRecords": "没有显示的数据",
+                "sInfoEmpty": "显示 0 条目",
+                "paginate": {
+                    "previous": "上一页",
+                    "next": "下一页"
+                }
+            },
+            "ordering": true,
+            "info": true,
+            "autoWidth": true
+        });
+
+
+        //事项ID
+        var ruleId, ruleTitle, ruleContent, ruleComments,rulePriority;
+
+        //添加事项
+        $(".rule-add").on("click", function (e) {
+            e.preventDefault();
+            var title = $(".rule-title").val();
+            var content = $(".rule-content").val();
+            var comments = $(".rule-comments").val();
+            var priority = $(".rule-priority option:selected").val();
+            var data = {
+                title: title,
+                content: content,
+                comments: comments,
+                priority:priority
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/rule',
+                data: data,
+                dataType: 'json',
+                success: function (data, status) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        swal(data.msg);
+                    } else if (data.status == 1) {
+                        swal({title: data.msg}, function () {
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                        });
+                    }
+                },
+                error: function (data, status) {
+                    if (status == "error") {
+                        location.reload();
+                    }
+                }
+            });
+
+        });
+
+        //删除事项
+        $("#rule-list").on("click",".btn-delete",function (e) {
+            e.preventDefault();
+            var id = $(this).attr("data-id");
+            var parent = $(this).parents("tr");
+            $.ajax({
+                url: '/deleteRule/' + id,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data, status) {
+                    console.log(data);
+                    if (data.status == 0) {
+
+                        swal(data.msg);
+                    } else if (data.status == 1) {
+                        parent.remove();
+                        swal({title: data.msg});
+                    }
+                },
+                error: function (data, status) {
+                    if (status == "error") {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+
+        //编辑事项
+        $("#rule-list").on("click",".btn-edit",function (e) {
+            ruleId = $(this).attr("data-id");
+            ruleTitle = $(this).parents("tr").find("td").eq(0).text();
+            ruleContent = $(this).parents("tr").find("td").eq(1).text();
+            ruleComments = $(this).parents("tr").find("td").eq(4).text();
+            rulePriority = $(this).parents("tr").find("label").attr("data-id");
+            $(".rule-title-update").val(ruleTitle);
+            $(".rule-content-update").val(ruleContent);
+            $(".rule-comments-update").val(ruleComments);
+            $(".rule-priority-update").val(rulePriority);
+            $('#updateRule').modal();
+        });
+
+
+        //更新事项
+        $(".update-btn").on("click", function (e) {
+            e.preventDefault();
+            var ruleTitle = $(".rule-title-update").val();
+            var ruleContent = $(".rule-content-update").val();
+            var ruleComments = $(".rule-comments-update").val();
+            var rulePriority =  $(".rule-priority-update").val();
+            var data = {
+                todo_item_title: ruleTitle,
+                todo_item_content: ruleContent,
+                comments: ruleComments,
+                priority:rulePriority
+            };
+
+            $.ajax({
+                url: '/updateRule/' + ruleId,
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (data, status) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        swal({title: data.msg});
+                    } else if (data.status == 1) {
+                        swal({title: data.msg}, function () {
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                        });
+                    }
+                },
+                error: function (data, status) {
+                    if (status == "error") {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+
+    });
+</script>
+</body>
+</html>
